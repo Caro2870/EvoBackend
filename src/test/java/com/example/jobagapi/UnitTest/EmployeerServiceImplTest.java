@@ -1,4 +1,4 @@
-package com.example.jobagapi;
+package com.example.jobagapi.UnitTest;
 import com.example.jobagapi.domain.model.Employeer;
 import com.example.jobagapi.domain.repository.EmployeerRepository;
 import com.example.jobagapi.domain.repository.UserRepository;
