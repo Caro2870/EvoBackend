@@ -2,15 +2,19 @@ package com.example.jobagapi;
 
 import com.example.jobagapi.domain.model.Postulant;
 import com.example.jobagapi.domain.repository.PostulantRepository;
+import com.example.jobagapi.domain.repository.UserRepository;
 import com.example.jobagapi.domain.service.PostulantService;
+import com.example.jobagapi.domain.service.UserService;
 import com.example.jobagapi.exception.ResourceNotFoundException;
 import com.example.jobagapi.service.PostulantServiceImpl;
+import com.example.jobagapi.service.UserServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
@@ -26,11 +30,19 @@ public class PostulantServiceImplTest {
     private PostulantRepository postulantRepository;
     @Autowired
     private PostulantService postulantService;
-
+    @MockBean
+    private UserRepository userRepository;
+    @Autowired
+    private UserService userService;
     @TestConfiguration
     static class PostulantServiceImplTestConfiguration {
+        @Bean
         public PostulantService postulantService() {
             return new PostulantServiceImpl();
+        }
+        @Bean
+        public UserService userService() {
+            return new UserServiceImpl();
         }
     }
 
@@ -38,12 +50,15 @@ public class PostulantServiceImplTest {
     @DisplayName("when SavePostulant With Valid Postulant Then Returns Success") //happy path
     public void whenSavePostulantWithValidPostulantThenReturnsSuccess() {
         Long id = 1L;
-        String name = "example@upc.edu.pe";
+        String name = "Carolina";
         String password = "Nota#20";
         Postulant postulant = new Postulant(id, name, "Villegas", "email", 2L, password, "document","civil");
-        Postulant savedPostulant = postulantRepository.save(postulant);
-        assertNotNull(savedPostulant);
+        when(postulantRepository.save(postulant)).thenReturn(postulant);
+        Postulant savedPostulant = postulantService.createPostulant(postulant);
+        assertThat(savedPostulant).isEqualTo(postulant);
+
     }
+
 
     @Test
     @DisplayName("when GetPostulantById With Valid Id Then Returns Postulant") //happy path
@@ -83,12 +98,14 @@ public class PostulantServiceImplTest {
         Long id = 1L;
         String name = "example@upc.edu.pe";
         String password = "Nota#20";
-        Postulant postulant = new Postulant(id, name, "Villegas", "email", 2L, password, "document","civil");
+        Postulant postulant = new Postulant(id, "caro", "Villegas", "email", 2L, "password", "document","civil");
 
         String newPassword = "Nota@20";
         postulant.setPassword(newPassword);
-        postulantRepository.save(postulant);
-        Optional<Postulant> updatePostulant = postulantRepository.findById(id);
-        assertThat(updatePostulant.get().getPassword()).isEqualTo(newPassword);
+        when(postulantRepository.save(postulant)).thenReturn(postulant);
+        when(postulantRepository.findById(id)).thenReturn(Optional.of(postulant));
+        Postulant saved = postulantService.updatePostulant(id, postulant);
+
+        assertThat(saved).isEqualTo(postulant);
     }
-}
+    }
