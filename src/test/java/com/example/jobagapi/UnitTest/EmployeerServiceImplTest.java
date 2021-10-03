@@ -61,7 +61,7 @@ public class EmployeerServiceImplTest {
 
 
     @Test
-    @DisplayName("when GetEmployeerById With Valid Id Then Returns Employeer") //happy path
+    @DisplayName("whenGetEmployeerByIdWithValidIdThenReturnsEmployeer") //happy path
     public void whenGetEmployeerByIdWithValidIdThenReturnsEmployeer() {
         //Arrange
         Long id = 1L;
