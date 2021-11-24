@@ -1,9 +1,6 @@
 package com.example.jobagapi.controller;
 
-import com.example.jobagapi.domain.model.Sector;
 import com.example.jobagapi.domain.model.Skill;
-import com.example.jobagapi.resource.SaveSectorResource;
-import com.example.jobagapi.resource.SectorResource;
 import com.example.jobagapi.resource.SkillResource;
 import com.example.jobagapi.resource.SaveSkillResource;
 import com.example.jobagapi.domain.service.SkillService;
@@ -24,7 +21,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
 @RequestMapping("/api")
 public class SkillController {
     @Autowired
@@ -33,14 +29,14 @@ public class SkillController {
     @Autowired
     private ModelMapper mapper;
 
-    @Operation(summary="Update Skill", description="Create Skill", tags={"skills"})
+    @Operation(summary="Update Skill", description="Update an already existing skill", tags={"skills"})
     @PutMapping("/skills/{skillId}")
     public SkillResource updateSector(@PathVariable Long skillId, @Valid @RequestBody SaveSkillResource resource){
         Skill skill = convertToEntity(resource);
         return convertToResource(skillService.updateSkill(skillId,skill));
     }
 
-    @Operation(summary="Get Skills", description="Get All Skills", tags={"skills"})
+    @Operation(summary="Get Skills", description="Get all the skill registered in the database", tags={"skills"})
     @GetMapping("/skills")
     public Page<SkillResource> getAllSkills(Pageable pageable){
         Page<Skill> skillPage = skillService.getAllSkills(pageable);
@@ -51,20 +47,20 @@ public class SkillController {
 
         return new PageImpl<>(resources, pageable, resources.size());
     }
-    @Operation(summary="Post Skill", description="Post Skill", tags={"skills"})
+    @Operation(summary="Post Skill", description="Create a new skill", tags={"skills"})
     @PostMapping("/skills")
     public SkillResource createSkill(@Valid @RequestBody SaveSkillResource resource) {
         Skill skill = convertToEntity(resource);
         return convertToResource(skillService.createSkill(skill));
     }
 
-    @Operation(summary="Get Skill By Id", description="Get Skill", tags={"skills"})
+    @Operation(summary="Get Skill By Id", description="Get an skill given an specific Id", tags={"skills"})
     @GetMapping("/skills/{skillId}}")
     public SkillResource getSkillById(@PathVariable Long skillId) {
         return convertToResource(skillService.getSkillById(skillId));
     }
 
-    @Operation(summary="Delete Skill", description="Delete Skill", tags={"skills"})
+    @Operation(summary="Delete Skill", description="Delete an already existing skill", tags={"skills"})
     @DeleteMapping("/skills/{skillId}}")
 
     public ResponseEntity<?> deleteSkill(@PathVariable Long skillId) {

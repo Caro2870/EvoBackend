@@ -1,1 +1,1 @@
-#TEAMROCKET-original
+# LGC-original

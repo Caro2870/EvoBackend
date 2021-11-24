@@ -54,15 +54,4 @@ public class EmployeerServiceImpl implements EmployeerService {
         employeerRepository.delete(employeer);
         return ResponseEntity.ok().build();
     }
-
-    @Override
-    public Employeer updateEmployeer(Long employeerId, Employeer employeerRequest) {
-        Employeer employeer = employeerRepository.findById(employeerId)
-                .orElseThrow(() ->new ResourceNotFoundException("Employeer","Id",employeerId));
-        return employeerRepository.save(
-
-                employeer.setPosicion(employeerRequest.getPosicion())
-
-        );
-    }
 }
