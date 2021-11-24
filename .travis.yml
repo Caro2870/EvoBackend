@@ -5,7 +5,7 @@ before_install:
   - chmod +x mvnw
 script: "./mvnw clean install"
 notifications:
-  email: markalbert_09@hotmail.com
+  email: carol.vi28@gmail.com
 deploy: :
-  app: jobag-best-platform
+  app: evojobag
   provider: heroku
