@@ -1,1 +1,2 @@
-# LGC-original
+# JOBAG - BACKEND
+Restful API with Spring Boot 

@@ -1,8 +1,13 @@
 package com.example.jobagapi.cucumber;
 
 import com.example.jobagapi.domain.model.Employeer;
+import com.example.jobagapi.domain.model.Postulant;
+import com.example.jobagapi.exception.ResourceNotFoundException;
+import io.cucumber.java.PendingException;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import lombok.extern.log4j.Log4j2;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,21 +15,26 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import javax.validation.constraints.NotNull;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @Log4j2
+@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class RegisterEmployeerSteps {
-
     @LocalServerPort
     private RestTemplate restTemplate = new RestTemplate();
-    private String postUrl="http://jobagbackend-env.eba-uqwxesqd.us-east-2.elasticbeanstalk.com";
+    private String postUrl="http://localhost:8080";
     private String error=null;
     Long cont = 1L;
     Long employeerId = 1L + cont;
+
 
     String email = randomString();
 
@@ -72,8 +82,6 @@ public class RegisterEmployeerSteps {
     public void registerARepeatedNumber() {
         String url=postUrl + "/api" + "/employeers/";
         Employeer newEmployeer = new Employeer(employeerId,"firstname","lastname",email,1L,"password","document","posicion");
-
-        log.info(newEmployeer);
 
         try
         {

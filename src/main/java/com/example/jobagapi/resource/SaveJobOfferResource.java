@@ -17,6 +17,7 @@ public class SaveJobOfferResource {
     private String direction;
     private String type;
     private String title;
+    private String url_video;
 
     public String getDescription() {
         return description;
@@ -80,4 +81,14 @@ public class SaveJobOfferResource {
         this.title = title;
         return this;
     }
+
+    public String getUrl_video() {
+        return url_video;
+    }
+
+    public SaveJobOfferResource setUrl_video(String url_video) {
+        this.url_video = url_video;
+        return this;
+    }
+
 }

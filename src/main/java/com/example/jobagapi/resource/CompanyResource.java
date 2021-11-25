@@ -8,6 +8,7 @@ public class CompanyResource {
     private String logo;
     private Long ruc;
     private String direccion;
+    private String url_video;
 
     //Employeer
     private Long idEmployeer;
@@ -57,6 +58,15 @@ public class CompanyResource {
 
     public CompanyResource setLogo(String logo) {
         this.logo = logo;
+        return this;
+    }
+
+    public String getUrl_video() {
+        return url_video;
+    }
+
+    public CompanyResource setUrl_video(String url_video) {
+        this.url_video = url_video;
         return this;
     }
 

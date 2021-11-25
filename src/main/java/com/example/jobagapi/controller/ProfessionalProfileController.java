@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins="http://localhost:4200")
 @RequestMapping("/api")
 public class ProfessionalProfileController {
     @Autowired
@@ -31,7 +32,7 @@ public class ProfessionalProfileController {
     private ModelMapper mapper;
 
 
-    @Operation(summary="Get profiles", description="Get all the profiles registered in the database", tags={"profiles"})
+    @Operation(summary="Get profiles", description="Get all profiles", tags={"profiles"})
 
     @GetMapping("/postulants/{postulantId}/profiles")
     public Page<ProfessionalProfileResource> getAllProfessionalProfileByPostulantId(@PathVariable Long postulantId, Pageable pageable) {
@@ -42,7 +43,7 @@ public class ProfessionalProfileController {
     }
 
 
-    @Operation(summary="Get profiles", description="Get all the profiles related to an existing postulant Id", tags={"profiles"})
+    @Operation(summary="Get profiles", description="Get profiles by postulantId", tags={"profiles"})
 
     @GetMapping("/postulants/{postulantId}/profiles/{profileId}")
     public ProfessionalProfileResource getProfessionalProfileByIdAndPostulantId(@PathVariable Long postulantId, @PathVariable Long profileId) {
@@ -51,7 +52,7 @@ public class ProfessionalProfileController {
 
 
 
-    @Operation(summary="Post profiles", description="Create a new profiles related to an existing postulant given an postulant Id", tags={"profiles"})
+    @Operation(summary="Post profiles", description="Create profiles", tags={"profiles"})
 
     @PostMapping("/postulants/{postulantId}/profiles")
     public ProfessionalProfileResource createProfessionalProfile(
@@ -60,7 +61,7 @@ public class ProfessionalProfileController {
     }
 
 
-    @Operation(summary="Put profiles", description="Update an already existing profile given an existing postulant Id", tags={"profiles"})
+    @Operation(summary="Put profiles", description="Update profiles", tags={"profiles"})
 
     @PutMapping("/postulants/{postulantId}/profiles/{profileId}")
     public ProfessionalProfileResource updateProfessionalProfile(
@@ -71,7 +72,7 @@ public class ProfessionalProfileController {
     }
 
 
-    @Operation(summary="Delete profiles", description="Delete an already existing profile given an existing postulant Id", tags={"profiles"})
+    @Operation(summary="Delete profiles", description="Delete profiles", tags={"profiles"})
 
     @DeleteMapping("/postulants/{postulantId}/profiles/{profileId}")
     public ResponseEntity<?> deleteProfessionalProfile(
