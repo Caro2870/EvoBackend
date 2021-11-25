@@ -24,15 +24,18 @@ public class JobagApiApplication {
         return new ModelMapper();
     }
 	
- @Bean
-public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("https://jobagapp.netlify.app");
-			}
-		};
-	}
+   @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
+            }
+        };
+    }
+
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
